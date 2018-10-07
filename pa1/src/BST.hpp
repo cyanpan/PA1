@@ -29,8 +29,12 @@ class BST {
     /** Default destructor.
         Delete every node in this BST.
      */
-    // TODO
-    virtual ~BST() {}
+    // TODO ok
+    virtual ~BST() {
+	deleteAll(root);
+	isize=0;
+	iheight=0;
+    }
 
     /** Given a reference to a Data item, insert a copy of it in this BST.
      *  Return  true if the item was added to this BST
@@ -40,8 +44,24 @@ class BST {
      *  Data items. (should not use ==, >, <=, >=)  For the reasoning
      *  behind this, see the assignment writeup.
      */
-    // TODO
-    virtual bool insert(const Data &item) {}
+    // TODO ok
+    virtual bool insert(const Data &item) {
+	int cur_height=0;
+	BSTNode<Data> *cur=root;
+	BSTNode<Data> *parent=nullptr;
+	while(cur){
+		parent=cur;
+		cur_height++;
+		if(cur->data < item){cur=cur->right;}
+		else if(item < cur->data){cur=cur->left;}
+		else return false;
+	}
+	cur=new BSTNode(item);
+	cur->parent=parent;
+	isize++;
+	iheight=max(iheight,cur_height+1);
+	return true;
+    }
 
     /** Find a Data item in the BST.
      *  Return an iterator pointing to the item, or pointing past
@@ -51,27 +71,33 @@ class BST {
      *  behind this, see the assignment writeup.
      */
     // TODO
-    virtual iterator find(const Data &item) const {}
+    virtual iterator find(const Data &item) const {
+ 	
+    }
 
     /** Return the number of items currently in the BST.
      */
-    // TODO
-    unsigned int size() const {}
+    // TODO ok
+    unsigned int size() const {return isize;}
 
     /** Return the height of the BST.
      */
-    // TODO
-    unsigned int height() const {}
+    // TODO ok
+    unsigned int height() const {return iheight;}
 
     /** Return true if the BST is empty, else false.
      */
-    // TODO
-    bool empty() const {}
-
+    // TODO ok
+    bool empty() const {
+	if(root)return false;
+	return true;
+    }
     /** Return an iterator pointing to the first item in the BST (not the root).
      */
     // TODO
-    iterator begin() const {}
+    iterator begin() const {
+	
+    }
 
     /** Return an iterator pointing past the last item in the BST.
      */
@@ -88,7 +114,7 @@ class BST {
        order. Implementing inorder and deleteAll base on the pseudo code is an
        easy way to get started.
      */
-    // TODO
+    // TODO ok
     void inorder(BSTNode<Data> *n) const {
         /* Pseudo Code:
           if current node is null: return;
@@ -96,6 +122,10 @@ class BST {
           print current node data
           recursively traverse right sub-tree
         */
+	if(!n)return;
+	inorder(n->left);
+	cout << n << '\n';//format?
+	inorder(n->right);
     }
 
     /** Find the first element of the BST
@@ -108,7 +138,7 @@ class BST {
 
     /** do a postorder traversal, deleting nodes
      */
-    // TODO
+    // TODO ok
     static void deleteAll(BSTNode<Data> *n) {
         /* Pseudo Code:
           if current node is null: return;
@@ -116,6 +146,10 @@ class BST {
           recursively delete right sub-tree
           delete current node
         */
+	if(!n)return;
+	deleteAll(n->left);
+	deleteAll(n->right);
+	free(n);
     }
 };
 
