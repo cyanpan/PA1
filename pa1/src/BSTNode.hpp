@@ -23,8 +23,11 @@ class BSTNode {
      ** RETURNS: the BSTNode that is the successor of this BSTNode,
      ** or 0 if there is none.
      */
-    // TODO
-    BSTNode<Data> *successor() {}
+    // TODO ok
+    BSTNode<Data> *successor() {
+	//if(!parent)return 0;
+	return parent;
+    }
 };
 
 /** Overload operator<< to print a BSTNode's fields to an ostream. */
