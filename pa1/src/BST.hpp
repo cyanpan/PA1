@@ -70,9 +70,19 @@ class BST {
      *  Data items. (should not use ==, >, <=, >=).  For the reasoning
      *  behind this, see the assignment writeup.
      */
-    // TODO
+    // TODO 
     virtual iterator find(const Data &item) const {
- 	
+	BSTNode<Data> *cur=root;
+	while(cur){
+		if(cur->data<item)cur=cur->right;
+		else if(item<cur->data)cur=cur->left;
+		else{
+			iterator tmp(cur);
+			return tmp;
+		}
+	}
+	iterator tmp(nullptr);
+	return tmp;
     }
 
     /** Return the number of items currently in the BST.
@@ -94,9 +104,18 @@ class BST {
     }
     /** Return an iterator pointing to the first item in the BST (not the root).
      */
-    // TODO
+    // TODO ok
     iterator begin() const {
-	
+	if(!root){
+		iterator tmp(nullptr);
+		return tmp;
+	}
+	BSTNode<Data>* cur=root;
+	while(cur->left){
+		cur=cur->left;
+	}
+	iterator tmp(cur);
+	return tmp;
     }
 
     /** Return an iterator pointing past the last item in the BST.
