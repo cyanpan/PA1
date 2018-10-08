@@ -56,10 +56,10 @@ class BST {
 		else if(item < cur->data){cur=cur->left;}
 		else return false;
 	}
-	cur=new BSTNode(item);
+	cur=new BSTNode<Data>(item);
 	cur->parent=parent;
 	isize++;
-	iheight=max(iheight,cur_height+1);
+	iheight= (cur_height+1) < iheight ? iheight : cur_height+1;
 	return true;
     }
 
