@@ -27,6 +27,30 @@ class BSTNode {
     BSTNode<Data> *successor() {
 	//if(!parent)return 0;
 	return parent;
+
+    // --------------------------------------------//
+    // ----------- Cyan's version -----------------//
+
+      if(this->right != NULL) {
+        BSTNode<Data> *succ = this->right;
+        // If right of child is not NULL, go to the very left of the right
+        while(succ->left != NULL) {
+          succ = succ->left;
+        }
+        return succ;
+      }
+
+      // This means that it does not have right of child, go up
+      else {
+        BSTNode<Data> *succ = this;
+        while(succ->parent != NULL) {
+          if(succ->parent->left == succ)
+            return succ->parent;
+          else
+            succ = succ->parent;
+        }
+      }
+      return 0;
     }
 };
 

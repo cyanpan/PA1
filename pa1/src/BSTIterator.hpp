@@ -14,7 +14,9 @@ class BSTIterator : public iterator<input_iterator_tag, Data> {
     /** Constructor.  Use the argument to initialize the current BSTNode
      *  in this BSTIterator.
      */ // TODO
-    BSTIterator(BSTNode<Data>* curr) {}
+    BSTIterator(BSTNode<Data>* curr) {
+      this->curr = curr;
+    }
 
     /** Dereference operator. */
     Data operator*() const { return curr->data; }
@@ -35,11 +37,15 @@ class BSTIterator : public iterator<input_iterator_tag, Data> {
     /** Equality test operator. */  // TODO ok
     bool operator==(BSTIterator<Data> const& other) const {
 	return curr == &other;
+   // Question about this one: (should it be..)
+    return curr == other.curr;
     }
 
     /** Inequality test operator. */  // TODO ok
     bool operator!=(BSTIterator<Data> const& other) const {
 	return cur != &other;
+  //---------------------------------------------------//
+    return curr != other.curr;
     }
 };
 
