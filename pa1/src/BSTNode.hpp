@@ -25,11 +25,6 @@ class BSTNode {
      */
     // TODO ok
     BSTNode<Data> *successor() {
-	//if(!parent)return 0;
-	return parent;
-
-    // --------------------------------------------//
-    // ----------- Cyan's version -----------------//
 
       if(this->right != NULL) {
         BSTNode<Data> *succ = this->right;
@@ -50,6 +45,8 @@ class BSTNode {
             succ = succ->parent;
         }
       }
+
+	// just simply return 0 if there is no successor
       return 0;
     }
 };

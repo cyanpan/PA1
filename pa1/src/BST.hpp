@@ -46,70 +46,59 @@ class BST {
      */
     // TODO double checked
     virtual bool insert(const Data &item) {
+	// The variable to hold the temp high of the tree
 	int cur_height=0;
+
+	// Create one cur pointer to point to root and also the parent
 	BSTNode<Data> *cur=root;
 	BSTNode<Data> *parent=nullptr;
+
+	// If the cur is NULL, then it must be the root pointer, create a new
+	// node for root
+	if(cur == NULL) {
+		cur = new BSTNode<Data> (item);
+		cur->left = NULL;
+		cur->right = NULL;
+		root = cur;
+		isize++;
+		cur_height++;
+		iheight = cur_height;
+		return true;
+	}
+
+	// We Iterate the tree to find the right spot for the new node
+	// also return false if the node is already exists
 	while(cur){
 		parent=cur;
 		cur_height++;
+		
+		// check the postion of the new element
 		if(cur->data < item){cur=cur->right;}
 		else if(item < cur->data){cur=cur->left;}
 		else return false;
 	}
-	cur=new BSTNode(item);
+
+	// Once we find the correct of the new node, we create a new node
+	cur=new BSTNode<Data> (item);
 	cur->parent=parent;
+
+	// Connect the left and right node between the parent and left right node
+	if(cur->parent!=NULL){
+		if(cur->parent->data < item){
+			cur->parent->right=cur;
+		}else{
+			cur->parent->left=cur;
+		}
+	}
+	cur->left = NULL;
+	cur->right = NULL;
 	isize++;
-	iheight=max(iheight,cur_height+1);
+	iheight=(cur_height+1) < iheight ? iheight : cur_height+1;
 	return true;
-// --------------------------------------------------------------------//
-        //------------Cyan's version-----------------
-        BSTNode<Data> *cur = root;
-        BSTNode<Data> *parent = root;
-        int tempheight = 0;
 
-        // If cur is NULL, then insert this node as the root node
-        if (cur == NULL) {
-          root = new BSTNode(item);
-          isize++;
-          iheight++;
-          return true;
-        }
-
-        tempheight++;
-        // Insert into the tree until it hits the right spot
-        while(cur != NULL) {
-
-          if(cur->data < item) {
-            if(cur->right != NULL) {
-              parent = parent->right;
-            }
-
-            cur = cur->right;
-          }
-          else if(item < cur->data) {
-            if(cur->left != NULL) {
-                parent = parent->left;
-            }
-
-            cur = cur->left;
-            cur->parent = parent;
-          }
-          // It means that the node is already in the tree
-          else
-            return false;
-
-          tempheight++;
-        }
-        cur = new BSTNode(item);
-        cur->parent = parent;
-
-        if(iheight < tempheight)
-          iheight = tempheight;
-
-        isize++;
     }
 
-    /** Find a Data item in the BST.
+   /** Find a Data item in the BST.
      *  Return an iterator pointing to the item, or pointing past
      *  the last node in the BST if not found.
      *  Note: This function should use only the '<' operator when comparing
@@ -119,22 +108,28 @@ class BST {
     // TODO
     virtual iterator find(const Data &item) const {
 
-      // Should we use the begin and end to find the element?
+      // First we use a pointer to point to the root
       BSTNode<Data> *cur = root;
 
-      while((cur->data != item) && (cur != NULL)) {
+	// Iterate the tree to see if we can find the element
+      while(cur != NULL) {
 
-        if(cur->data < item) {
+        if(cur->data < item) 
             cur = cur->right;
-        }
+
         else if(item < cur->data)
           cur = cur->left;
+
+	else
+	   break;
       }
 
-      if(cur == NULL)
-        return typename BST<Data>::iterator(0);
-      else if(cur->data == item)
+
+	// Else just return an iterator containing the element
+      if(!(cur->data < item) && !(item < cur->data))
         return typename BST<Data>::iterator(cur);
+
+      return typename BST<Data>::iterator(0);
 
     }
 
@@ -152,6 +147,8 @@ class BST {
      */
     // TODO double checked
     bool empty() const {
+	// We simply just check if the tree has root, if it has root
+	// then it's not empty
 	     if(root != NULL)
           return false;
 	     else
@@ -191,7 +188,7 @@ class BST {
         return;
 
     	inorder(n->left);
-    	cout << n->data << endl;//format?
+    	cout << n->data << endl;
     	inorder(n->right);
     }
 
@@ -213,15 +210,9 @@ class BST {
           recursively delete right sub-tree
           delete current node
         */
-	if(!n)return;
-	deleteAll(n->left);
-	deleteAll(n->right);
-	free(n);
-
-// --------------------------------------------------------//
-    // Cyan's version
       if(n == NULL)
          return;
+
       deleteAll(n->left);
       deleteAll(n->right);
 

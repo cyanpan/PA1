@@ -36,16 +36,12 @@ class BSTIterator : public iterator<input_iterator_tag, Data> {
 
     /** Equality test operator. */  // TODO ok
     bool operator==(BSTIterator<Data> const& other) const {
-	return curr == &other;
-   // Question about this one: (should it be..)
-    return curr == other.curr;
+    	return curr == other.curr;
     }
 
     /** Inequality test operator. */  // TODO ok
     bool operator!=(BSTIterator<Data> const& other) const {
-	return cur != &other;
-  //---------------------------------------------------//
-    return curr != other.curr;
+    	return curr != other.curr;
     }
 };
 
