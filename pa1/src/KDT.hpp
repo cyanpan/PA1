@@ -44,7 +44,10 @@ class Point {
     /** Return the squre of the Euclidean distance between two points p1 and p2
      */
     // TODO
-    static double squareDistance(const Point &p1, const Point &p2) {}
+    static double squareDistance(const Point &p1, const Point &p2) {i
+	int power = 2;
+	return sqrt(pow(abs(p1.x - p2.x), power) + pow(abs(p1.y - p2.y), power));
+}
 };
 
 std::ostream &operator<<(std::ostream &out, const Point &data) {
@@ -72,7 +75,21 @@ class KDT : public BST<Point> {
      *        function called buildSubset defined below.
      */
     // TODO
-    virtual unsigned int build(vector<Point> &items) {}
+    virtual unsigned int build(vector<Point> &items) {
+	int tempH;
+	int number;
+	BSTNode<Point> *temp;
+
+	sort(items.begin(), items.end(), xLessThan);
+
+	/*if(items.size() % 2 == 1)
+		number = items.size()/2 + 1;
+	else
+		number = item.size() / 2;
+	
+	temp = new buildSubset();
+	*/		
+}
 
     /** Find the nearest neighbor to a given point
      *  Returns the point in the kd-tree nearest to the parameter item.
@@ -123,7 +140,9 @@ class KDT : public BST<Point> {
     // TODO
     BSTNode<Point> *buildSubset(vector<Point> items, unsigned int start,
                                 unsigned int end, unsigned int dimension,
-                                unsigned int height) {}
+                                unsigned int height) {
+	
+}
 
     /** Find the node in the subtree with that is closest to the given point p
      *  Parameters: node the root of the subtree being searched

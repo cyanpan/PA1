@@ -135,7 +135,6 @@ int main() {
 
     cout << "OK" << endl;
 
-   cout << "Additional test" << endl;
 
     return 0;
 }

@@ -71,7 +71,7 @@ class BST {
 	while(cur){
 		parent=cur;
 		cur_height++;
-		
+
 		// check the postion of the new element
 		if(cur->data < item){cur=cur->right;}
 		else if(item < cur->data){cur=cur->left;}
@@ -114,21 +114,19 @@ class BST {
 	// Iterate the tree to see if we can find the element
       while(cur != NULL) {
 
-        if(cur->data < item) 
+        if(cur->data < item)
             cur = cur->right;
 
         else if(item < cur->data)
           cur = cur->left;
-
-	else
-	   break;
+		
+		// Found the element
+	      else
+	        return typename BST<Data>::iterator(cur);
       }
 
-
-	// Else just return an iterator containing the element
-      if(!(cur->data < item) && !(item < cur->data))
-        return typename BST<Data>::iterator(cur);
-
+	// Return a empty Iterator if the element is not found in the tree
+     
       return typename BST<Data>::iterator(0);
 
     }
