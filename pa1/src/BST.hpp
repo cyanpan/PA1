@@ -9,7 +9,7 @@ template <typename Data>
 class BST {
    protected:
     /** Pointer to the root of this BST, or 0 if the BST is empty */
-    BSTNode<Data> *root;
+    //BSTNode<Data> *root;
 
     /** Number of Data items stored in this BST. */
     unsigned int isize;
@@ -18,6 +18,7 @@ class BST {
     unsigned int iheight;
 
    public:
+BSTNode<Data> *root;
     /** define iterator as an aliased typename for BSTIterator<Data>. */
     typedef BSTIterator<Data> iterator;
 
