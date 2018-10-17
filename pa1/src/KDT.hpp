@@ -75,9 +75,20 @@ class KDT : public BST<Point> {
      */
     // TODO
     virtual unsigned int build(vector<Point> &items) {
-	root=buildSubset(items,(unsigned int)0,(unsigned int)items.size(),0,1);
-        isize=items.size();
-	return (unsigned int)items.size();
+/*
+	//vector<Point> noduplicate;
+	//sort(items.begin(),items.end(),xLessThan);
+	//sort(items.begin(),items.end(),yLessThan);
+	//if(!items.empty()){noduplicate.push_back(items[0]);}
+	for(int i=1;i<items.size();i++){
+		if(items[i]!=items[i-1])noduplicate.push_back(items[i]);
+	}*/
+	//root=buildSubset(noduplicate,(unsigned int)0,(unsigned int)noduplicate.size(),0,1);
+
+        root=buildSubset(items,(unsigned int)0,(unsigned int)items.size(),0,1);
+	isize=items.size();
+	return (unsigned int)isize;
+
     }
 
     /** Find the nearest neighbor to a given point
@@ -92,18 +103,11 @@ class KDT : public BST<Point> {
      */
     // TODO
     virtual iterator findNearestNeighbor(const Point &item) const {
-
-	//BSTNode<Point> **closestPoint=nullptr;
 	if(!root){return BSTIterator<Point>(nullptr);}
 	BSTNode<Point> *tmp=new BSTNode<Point>(Point(2147483647.0,2147483647.0));
 	BSTNode<Point> **closestPoint=&tmp;
 	double* smallestSquareDistance=new double(2147483647.0);
 	findNNHelper(root, item,smallestSquareDistance,closestPoint,0);
-	//iterator tmp(*closestPoint);
-	//cout << "finish" << endl;
-	//cout << "really" << endl;
-	//cout << "finish" << endl;
-	//if(closestPoint==nullptr)cout << "empty" << endl;
 	return BSTIterator<Point>(*closestPoint);
     }
 
@@ -176,18 +180,17 @@ class KDT : public BST<Point> {
                       double *smallestSquareDistance,
                       BSTNode<Point> **closestPoint,
                       unsigned int dimension) const {
-	if(!node){/*cout << "no point" << endl;*/return;}
-	//cout << node->data.x << " " << node->data.y << endl;
+	if(!node){return;}
 	if(*smallestSquareDistance > Point::squareDistance(queryPoint,node->data)){
 		*smallestSquareDistance = Point::squareDistance(queryPoint,node->data);
 		*closestPoint=node;
-		//cout << *smallestSquareDistance << endl;
 	}
-	//cout << "goleft" << endl;
 	findNNHelper(node->left,queryPoint,smallestSquareDistance,closestPoint,dimension^1);
-	if(dimension==0 && *smallestSquareDistance > abs(queryPoint.x-node->data.x)){findNNHelper(node->right,queryPoint,smallestSquareDistance,closestPoint,dimension^1);/*cout << "go right" << endl;*/}
-	else if(dimension==1 && *smallestSquareDistance > abs(queryPoint.y-node->data.y)){findNNHelper(node->right,queryPoint,smallestSquareDistance,closestPoint,dimension^1);/*cout << "go right" << endl;*/}
-        /*else cout << "no go right" << endl;*/
+
+	if(dimension==0 && *smallestSquareDistance > abs(queryPoint.x-node->data.x)){findNNHelper(node->right,queryPoint,smallestSquareDistance,closestPoint,dimension^1);}
+	else if(dimension==1 && *smallestSquareDistance > abs(queryPoint.y-node->data.y)){findNNHelper(node->right,queryPoint,smallestSquareDistance,closestPoint,dimension^1);}
+    
+	//findNNHelper(node->right,queryPoint,smallestSquareDistance,closestPoint,dimension^1);
     }
 };
 
