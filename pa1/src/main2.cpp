@@ -72,11 +72,38 @@ int main(int argc, char *argv[]) {
 
     // TODO
     // main function implementation should go here
-	double x, y;
+
+    vector<Point> point;
+    double xvalue;
+    double yvalue;
+    while (true) {
+        in >> xvalue;
+        in >> yvalue;
+        if (!in.good()) break;
+        point.push_back(Point(xvalue, yvalue));
+    }
+    KDT kdt;
+    kdt.build(point);
+    height=kdt.height();
+    size = kdt.size();
+    cout << "Size of tree: " << size << "\n";
+    cout << "Height of tree: " << height << "\n";
+    char charin = 'y';
+    while (charin == 'y') {
+        cout << "Enter coordinate (x, y): " << "\n";
+        cin >> xvalue; 
+        cin >> yvalue; 
+        Point nearestNeighbor = *kdt.findNearestNeighbor(Point(xvalue, yvalue));
+        cout << "Nearest point in tree: " << nearestNeighbor << "\n";
+        cout << "Search again? (y/n)" << "\n";
+        cin >> charin;
+    }
+/*
+    double x, y;
 
     vector<Point> points;
 
-    while (true) {
+    for(;;) {
         in >> x;
         in >> y;
         if (!in.good()) break;
@@ -85,8 +112,8 @@ int main(int argc, char *argv[]) {
 
     KDT kdt;
     kdt.build(points);
-    size = kdt.size();
     height = kdt.height();
+    size = kdt.size();
     cout << "Size of tree: " << size << "\n";
     cout << "Height of tree: " << height << "\n";
 
@@ -100,7 +127,7 @@ int main(int argc, char *argv[]) {
         cout << "Search again? (y/n)" << "\n";
         cin >> input;
     }
-
+*/
     if (in.is_open()) {
         in.close();
     }
