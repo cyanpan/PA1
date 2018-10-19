@@ -84,7 +84,9 @@ class KDT : public BST<Point> {
 		if(items[i]!=items[i-1])noduplicate.push_back(items[i]);
 	}*/
 	//root=buildSubset(noduplicate,(unsigned int)0,(unsigned int)noduplicate.size(),0,1);
-
+	isize=0;
+	iheight=0;
+	root=nullptr;
         root=buildSubset(items,(unsigned int)0,(unsigned int)items.size(),0,1);
 	isize=items.size();
 	return (unsigned int)isize;
@@ -104,9 +106,9 @@ class KDT : public BST<Point> {
     // TODO
     virtual iterator findNearestNeighbor(const Point &item) const {
 	if(!root){return BSTIterator<Point>(nullptr);}
-	BSTNode<Point> *tmp=new BSTNode<Point>(Point(2147483647.0,2147483647.0));
+	BSTNode<Point> *tmp=root;//new BSTNode<Point>(Point(2147483647.0,2147483647.0));
 	BSTNode<Point> **closestPoint=&tmp;
-	double smallestSquareDistance=2147483647.0;
+	double smallestSquareDistance=Point::squareDistance(item,tmp->data);
 	findNNHelper(root, item,&smallestSquareDistance,closestPoint,0);
 	return BSTIterator<Point>(*closestPoint);
     }
@@ -180,7 +182,7 @@ class KDT : public BST<Point> {
                       BSTNode<Point> **closestPoint,
                       unsigned int dimension) const {
 	if(!node){return;}
-	/*bool isleft;
+	bool isleft;
 	if(dimension==0){
 		if(queryPoint.x<node->data.x){
 			isleft=true;
@@ -213,17 +215,17 @@ class KDT : public BST<Point> {
                         if(isleft)findNNHelper(node->right,queryPoint,smallestSquareDistance,closestPoint,0);
                         else findNNHelper(node->left,queryPoint,smallestSquareDistance,closestPoint,0);
                 }
-	}*/
-
+	}
+/*
 	if(*smallestSquareDistance > Point::squareDistance(queryPoint,node->data)){
 		*smallestSquareDistance = Point::squareDistance(queryPoint,node->data);
 		*closestPoint=node;
 	}
 	findNNHelper(node->left,queryPoint,smallestSquareDistance,closestPoint,dimension^1);
-
-	if(dimension==0 && *smallestSquareDistance > /*abs(queryPoint.x-node->data.x)*/abs(queryPoint.x-node->data.x)){findNNHelper(node->right,queryPoint,smallestSquareDistance,closestPoint,dimension^1);}
-	if(dimension==1 && *smallestSquareDistance > abs(queryPoint.y-node->data.y)/*abs(queryPoint.y-node->data.y)*/){findNNHelper(node->right,queryPoint,smallestSquareDistance,closestPoint,dimension^1);}
+	if(dimension==0 && *smallestSquareDistance > abs(queryPoint.x-node->data.x)*abs(queryPoint.x-node->data.x)){findNNHelper(node->right,queryPoint,smallestSquareDistance,closestPoint,dimension^1);}
+	if(dimension==1 && *smallestSquareDistance > abs(queryPoint.y-node->data.y)*abs(queryPoint.y-node->data.y)){findNNHelper(node->right,queryPoint,smallestSquareDistance,closestPoint,dimension^1);}
 	//findNNHelper(node->right,queryPoint,smallestSquareDistance,closestPoint,dimension^1);
+*/
     }
 };
 
